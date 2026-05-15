@@ -24,7 +24,7 @@ export default function LoginPage() {
         if (result?.error) {
             setError(result.error);
         } else if (result?.url) {
-            window.location.href = result.url;
+            window.location.href = "/dashboard";
         }
 
         setLoading(false);
