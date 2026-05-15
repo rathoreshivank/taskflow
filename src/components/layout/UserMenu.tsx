@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 
 function getInitials(name: string | null, email: string | null) {
@@ -20,6 +21,7 @@ function getInitials(name: string | null, email: string | null) {
 }
 
 export default function UserMenu() {
+    const router = useRouter();
     const { data: session, status } = useSession();
     const name = session?.user?.name ?? null;
     const email = session?.user?.email ?? null;
@@ -50,7 +52,10 @@ export default function UserMenu() {
 
                 <button
                     type="button"
-                    onClick={() => signOut({ callbackUrl: "/login" })}
+                    onClick={async () => {
+                        await signOut({ redirect: false });
+                        router.replace("/login");
+                    }}
                     className="mt-4 w-full rounded-full border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:border-zinc-300 hover:bg-zinc-50"
                 >
                     Logout
